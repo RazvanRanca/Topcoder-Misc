@@ -1,0 +1,320 @@
+import java.util.*;
+
+public class ZigZag {
+      public int longestZigZag(int[] sequence) {
+            if(sequence.length > 1) {
+                int [] temp = new int [sequence.length + 1];
+                Arrays.fill(temp, 0);
+                temp[1]=1;
+                temp[2] =2;
+
+                if(sequence[1] - sequence[0] == 0)
+                    temp[2] = 1;
+
+                for(int i=2; i<sequence.length; i++) {
+
+                    int curDif = sequence[i] - sequence[i-1];
+                    if(curDif == 0)
+                        temp[i+1] = temp[i];
+                    else
+                        for(int j=1; j<i; j++) {
+                            int dif =  sequence[j] - sequence[j-1];
+                            if(((curDif > 0 && dif <0) || (curDif<0 && dif>0)) && temp[j+1] + 1 > temp[i+1])
+                                temp[i+1] = temp[j+1] + 1;
+                            else
+                                if(temp[j+1] > temp[i+1]) {
+                                    temp[i+1] = temp[j+1];
+                                    if(temp[j+1] == 1)
+                                        temp[i+1] = 2;
+                                }
+                        }
+
+                }
+                return temp[sequence.length];
+            }
+            else {
+                if(sequence.length == 1)
+                    return 1;
+                else
+                    return 0;
+            }
+      }	 
+       
+
+
+
+// BEGIN CUT HERE
+
+/** begin cut - don't modify this line*/
+	public static void main(String[] a) {
+		new ZigZag().runTestCase(0);
+		new ZigZag().runTestCase(1);
+		new ZigZag().runTestCase(2);
+		new ZigZag().runTestCase(3);
+		new ZigZag().runTestCase(4);
+		new ZigZag().runTestCase(5);
+	}
+
+	public void runTestCase(int nbr) {
+		switch(nbr) {
+			case 0 : {
+				checkOutput(longestZigZag(new int[] { 1, 7, 4, 9, 2, 5 }), 6, 0); break;
+			}
+			case 1 : {
+				checkOutput(longestZigZag(new int[] { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 }), 7, 1); break;
+			}
+			case 2 : {
+				checkOutput(longestZigZag(new int[] { 44 }), 1, 2); break;
+			}
+			case 3 : {
+				checkOutput(longestZigZag(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }), 2, 3); break;
+			}
+			case 4 : {
+				checkOutput(longestZigZag(new int[] { 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 100, 19, 7, 5, 5, 5, 1000, 32, 32 }), 8, 4); break;
+			}
+			case 5 : {
+				checkOutput(longestZigZag(new int[] { 374, 40, 854, 203, 203, 156, 362, 279, 812, 955,  600, 947, 978, 46, 100, 953, 670, 862, 568, 188,  67, 669, 810, 704, 52, 861, 49, 640, 370, 908,  477, 245, 413, 109, 659, 401, 483, 308, 609, 120,  249, 22, 176, 279, 23, 22, 617, 462, 459, 244 } ), 36, 5); break;
+			}
+		}
+	}
+	final void checkOutput(int mine, int them, int nbr) {
+		boolean success = (mine==them);
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append(mine);
+			out.append(", Expected: ");
+			out.append(them);
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(long mine, long them, int nbr) {
+		boolean success = (mine==them);
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append(mine);
+			out.append(", Expected: ");
+			out.append(them);
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(double mine, double them, int nbr) {
+		boolean success = doubleCompare(mine, them);
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append(mine);
+			out.append(", Expected: ");
+			out.append(them);
+		}
+		System.out.println(out);
+	}
+	private static boolean doubleCompare(double expected, double result){
+		double MAX_DOUBLE_ERROR = 1E-9;
+		if(Double.isNaN(expected)){
+			return Double.isNaN(result);
+		}else if(Double.isInfinite(expected)){
+			if(expected > 0){
+				return result > 0 && Double.isInfinite(result);
+			}else{
+				return result < 0 && Double.isInfinite(result);
+			}
+		}else if(Double.isNaN(result) || Double.isInfinite(result)){
+			return false;
+		}else if(Math.abs(result - expected) < MAX_DOUBLE_ERROR){
+			return true;
+		}else{
+			double min = Math.min(expected * (1.0 - MAX_DOUBLE_ERROR),
+				expected * (1.0 + MAX_DOUBLE_ERROR));
+			double max = Math.max(expected * (1.0 - MAX_DOUBLE_ERROR),
+					expected * (1.0 + MAX_DOUBLE_ERROR));
+			return result > min && result < max;
+		}
+	}
+	final void checkOutput(char mine, char them, int nbr) {
+		boolean success = (mine==them);
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("'");
+			out.append(mine);
+			out.append("'");
+			out.append(", Expected: ");
+			out.append("'");
+			out.append(them);
+			out.append("'");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(String mine, String them, int nbr) {
+		boolean success = (mine.equals(them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("\"");
+			out.append(mine);
+			out.append("\"");
+			out.append(", Expected: ");
+			out.append("\"");
+			out.append(them);
+			out.append("\"");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(long[] mine, long[] them, int nbr) {
+		boolean success = (Arrays.equals(mine, them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("{");
+			for(int x=0;x<mine.length;x++) {
+				out.append(mine[x]);
+				if(x<mine.length-1) out.append(", ");
+			}
+			out.append("}");
+			out.append(", Expected: ");
+			out.append("{");
+			for(int x=0;x<them.length;x++) {
+				out.append(them[x]);
+				if(x<them.length-1) out.append(", ");
+			}
+			out.append("}");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(char[] mine, char[] them, int nbr) {
+		boolean success = (Arrays.equals(mine, them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("{");
+			for(int x=0;x<mine.length;x++) {
+				out.append(mine[x]);
+				if(x<mine.length-1) out.append(", ");
+			}
+			out.append("}");
+			out.append(", Expected: ");
+			out.append("{");
+			for(int x=0;x<them.length;x++) {
+				out.append(them[x]);
+				if(x<them.length-1) out.append(", ");
+			}
+			out.append("}");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(double[] mine, double[] them, int nbr) {
+		boolean success = (Arrays.equals(mine, them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("{");
+			for(int x=0;x<mine.length;x++) {
+				out.append(mine[x]);
+				if(x<mine.length-1) out.append(", ");
+			}
+			out.append("}");
+			out.append(", Expected: ");
+			out.append("{");
+			for(int x=0;x<them.length;x++) {
+				out.append(them[x]);
+				if(x<them.length-1) out.append(", ");
+			}
+			out.append("}");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(int[] mine, int[] them, int nbr) {
+		boolean success = (Arrays.equals(mine, them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("{");
+			for(int x=0;x<mine.length;x++) {
+				out.append(mine[x]);
+				if(x<mine.length-1) out.append(", ");
+			}
+			out.append("}");
+			out.append(", Expected: ");
+			out.append("{");
+			for(int x=0;x<them.length;x++) {
+				out.append(them[x]);
+				if(x<them.length-1) out.append(", ");
+			}
+			out.append("}");
+		}
+		System.out.println(out);
+	}
+	final void checkOutput(String[] mine, String[] them, int nbr) {
+		boolean success = (Arrays.equals(mine, them));
+		StringBuffer out = new StringBuffer();
+		out.append("Example ");
+		out.append((nbr+1));
+		out.append(" - ");
+		out.append(success ? "success" : "failure   ");
+		if(!success) {
+			out.append("Got: ");
+			out.append("{");
+			for(int x=0;x<mine.length;x++) {
+				out.append(mine[x]);
+				if(x<mine.length-1) out.append(", ");
+			}
+			out.append("}");
+			out.append(", Expected: ");
+			out.append("{");
+			for(int x=0;x<them.length;x++) {
+				out.append(them[x]);
+				if(x<them.length-1) out.append(", ");
+			}
+			out.append("}");
+		}
+		System.out.println(out);
+	}
+
+/** end cut - don't modify this line*/
+
+
+
+// END CUT HERE
+
+}
+
+// Powered by FileEdit
+// Powered by CodeProcessor

@@ -1,0 +1,19 @@
+// BEGIN CUT HERE 
+package topcoder;
+// END CUT HERE
+
+import java.util.*;
+
+public class BadVocabulary {
+      public int count(String badPrefix, String badSuffix, String badSubstring, String[] vocabulary) {
+            	            
+      }	 
+       
+// BEGIN CUT HERE 
+      public static void main(String[] args) {
+        	BadVocabulary tp = new BadVocabulary();
+       	System.out.println(tp.count());
+        } 
+// END CUT HERE
+      }
+

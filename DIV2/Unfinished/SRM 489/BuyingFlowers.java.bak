@@ -1,0 +1,19 @@
+// BEGIN CUT HERE 
+package topcoder;
+// END CUT HERE
+
+import java.util.*;
+
+public class BuyingFlowers {
+      public int buy(int[] roses, int[] lilies) {
+            	            
+      }	 
+       
+// BEGIN CUT HERE 
+      public static void main(String[] args) {
+        	BuyingFlowers tp = new BuyingFlowers();
+       	System.out.println(tp.buy());
+        } 
+// END CUT HERE
+      }
+

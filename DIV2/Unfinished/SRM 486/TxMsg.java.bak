@@ -1,0 +1,19 @@
+// BEGIN CUT HERE 
+package topcoder;
+// END CUT HERE
+
+import java.util.*;
+
+public class TxMsg {
+      public String getMessage(String original) {
+            	            
+      }	 
+       
+// BEGIN CUT HERE 
+      public static void main(String[] args) {
+        	TxMsg tp = new TxMsg();
+       	System.out.println(tp.getMessage());
+        } 
+// END CUT HERE
+      }
+
